@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Pokemon</title>
+    <style>
+       
+
+        #container {
+            width: 70%;
+            margin: auto;
+            display: flex;
+            flex-wrap: wrap;
+            padding: 5%;
+        }
+
+        #left {
+            width: 400px;
+            margin: auto;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        #right {
+            width: 400px;
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+            margin: auto;
+            height: 400px;
+        }
+
+        #left input {
+            padding: 10px;
+            width: 80%;
+            margin: auto;
+            font-size: 15px;
+            border: 3px solid black;
+            border-radius: 5px;
+            font-weight: 400;
+            font-size: 18px;
+        }
+
+        #left button {
+            padding: 10px;
+            width: 86%;
+            margin: auto;
+            font-size: 18px;
+            margin-top: 20px;
+            background-color: green;
+            color: white;
+            font-weight: 500;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        }
+
+        button:active {
+            transform: translateY(4px);
+        }
+
+        #details {
+            border: 5px solid green;
+            height: auto;
+            padding: 20px;
+            width: 75%;
+            border-radius: 10px;
+            background: white;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container">
+        <div id="left">
+            <div>
+                <input type="text" id="name" placeholder="Search Pokemon">
+                <button onclick="getData()">Search</button>
+            </div>
+            <div id="details">
+                <h2 style="text-align: center; color: blue;" id="pname"></h2>
+                <h3>id : <span style="color: blue;" id="id"> </span></h3>
+                <h3>height : <span style="color: blue;" id= "height"> </span></h3>
+                <h3>Weight : <span style="color: blue;" id="weight"> </span></h3>
+                <h3>Abilities : <span style="color: blue;" id="abilities"> </span></h3>
+                <h3>Moves : <span style="color: blue;" id="moves"> </span></h3>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+
+
+    function getData() {
+        var name = document.getElementById('name').value;
+        fetch(` https://pokeapi.co/api/v2/pokemon/${name}/`)
+            .then(function (res) {
+                res.json().then(function (res) {
+                        showData(res);
+                })
+            }).catch(function (err) {
+                console.log("error");
+            })
+    }
+
+    function showData(data) {
+
+        var name = document.getElementById("pname");
+        name.innerHTML = data.name;
+
+        var id = document.getElementById("id");
+        id.innerHTML = data.id;
+
+        var height = document.getElementById("height");
+        height.innerHTML = data.height;
+
+        var weight = document.getElementById("weight");
+        weight.innerHTML = data.weight;
+
+        var abilities = document.getElementById("abilities");
+        abilities.innerHTML = data.abilities[0].ability.name + " , " + data.abilities[1].ability.name;
+
+        var moves = document.getElementById("moves");
+        moves.innerHTML = data.moves[0].move.name + " , " + data.moves[1].move.name;
+
+
+        console.log(data);
+    }
+
+</script>
+
+</html>

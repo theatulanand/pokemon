@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokemon</title>
+
+    <style>
+        #container {
+            width: 70%;
+            height: 500px;
+            margin: auto;
+        }
+
+        table {
+            width: 100%;
+            margin: auto;
+            margin-left: 90px;
+        }
+
+        td {
+            width: 20%;
+            border: 2px solid #777;
+            font-size: 25px;
+            text-align: center;
+        }
+
+        tr {
+            display: flex;
+            flex-wrap: wrap;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 style="text-align: center; color: red; font-size: 60px;">Pokemon</h1>
+    <div id="container">
+        <table id="table">
+            <tr id="tr">
+                <!-- <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>5</td>
+            <td>6</td>
+            <td>7</td>
+            <td>8</td>
+            <td>9</td>
+            <td>10</td>
+            <td>11</td>
+            <td>12</td>
+            <td>13</td>
+            <td>14</td>
+            <td>15</td>
+            <td>16</td>
+            <td>17</td>
+            <td>18</td>
+            <td>19</td>
+            <td>20</td> -->
+            </tr>
+        </table>
+    </div>
+</body>
+<script>
+    var tr = document.getElementById("tr");
+
+    fetch(`https://pokeapi.co/api/v2/pokemon/`)
+        .then(function (res) {
+            res.json().then(function (res) {
+                storeData(res);
+            })
+        }).catch(function (err) {
+            console.log("error");
+        })
+
+function storeData(data){
+    var arr = data.results;
+    var pokemon = localStorage.setItem("pokemon",JSON.stringify(arr));
+    showData();
+}
+
+
+function showData(){
+    var data = JSON.parse(localStorage.getItem("pokemon"));
+    data.forEach(function(ele){
+        var td = document.createElement("td");
+
+        td.innerText = ele.name;
+
+        tr.append(td);
+    });
+}
+</script>
+
+</html>
